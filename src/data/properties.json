@@ -1,42 +1,55 @@
 [
   {
     "Id": 1,
+    "SellRent": 1,
     "Name": "Birla House",
     "Type": "House",
+    "Image": "prop-1.jpeg",
     "Price": 120000
   },
   {
     "Id": 2,
+    "SellRent": 1,
     "Name": "Shazia House",
     "Type": "1BHK",
+    "Image": "prop-2.jpg",
     "Price": 240000
   },
   {
     "Id": 3,
+    "SellRent": 1,
     "Name": "Tasawar House",
     "Type": "2BHK",
+    "Image": "prop-3.jpg",
     "Price": 360000
   },
   {
     "Id": 4,
+    "SellRent": 2,
     "Name": "Jazib House",
     "Type": "3BHK",
+    "Image": "prop-4.jpg",
     "Price": 480000
   },
   {
     "Id": 5,
+    "SellRent": 1,
     "Name": "Ahmed House",
     "Type": "4BHK",
+    "Image": "prop-5.jpg",
     "Price": 600000
   },
   {
     "Id": 6,
+    "SellRent": 2,
     "Name": "Zuha House",
     "Type": "5BHK",
+    "Image": "prop-6.jpg",
     "Price": 720000
   },
   {
     "Id": 7,
+    "SellRent": 1,
     "Name": "Aunt House",
     "Type": "6BHK",
     "Price": 840000
