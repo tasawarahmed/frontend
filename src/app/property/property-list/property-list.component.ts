@@ -23,9 +23,6 @@ export class PropertyListComponent implements OnInit {
     //console.log(this.PropertyType);
 
     switch (this.PropertyType) {
-      // case "":
-      //     this.SellRent = 0;
-      //     break;
       case 'rent-property':
         this.SellRent = 2;
         break;
@@ -42,7 +39,7 @@ export class PropertyListComponent implements OnInit {
       this.housingService.getUnfilteredProperties().subscribe(
         (data) => {
           this.Properties = data;
-          console.log(data);
+          //console.log(data);
         },
         (error) => {
           console.log(error);
@@ -52,7 +49,7 @@ export class PropertyListComponent implements OnInit {
       this.housingService.getAllProperties(this.SellRent).subscribe(
         (data) => {
           this.Properties = data;
-          console.log(data);
+          //console.log(data);
         },
         (error) => {
           console.log(error);
