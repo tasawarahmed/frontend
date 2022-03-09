@@ -5,3 +5,21 @@
 .error-block{
   color: red;
 }
+
+.btn-group > label[ng-reflect-btn-radio]{
+  border-radius: 44px;
+  padding: 0 15px;
+  line-height: 30px;
+  margin-bottom: 5px;
+}
+
+.card-header > h1 {
+  font-weight: bold;
+  color: white !important;
+}
+
+.card-header {
+  height: 42px;
+  padding: 4px 10px !important;
+  background-color: #007bff !important;
+}
