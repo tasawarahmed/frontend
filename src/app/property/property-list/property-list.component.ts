@@ -36,7 +36,7 @@ export class PropertyListComponent implements OnInit {
     //console.log(this.SellRent);
 
     if (this.SellRent == 0) {
-      this.housingService.getUnfilteredProperties().subscribe(
+      this.housingService.getAllProperties().subscribe(
         (data) => {
           this.Properties = data;
           //console.log(data);
@@ -49,6 +49,11 @@ export class PropertyListComponent implements OnInit {
       this.housingService.getAllProperties(this.SellRent).subscribe(
         (data) => {
           this.Properties = data;
+          // const newProperty = JSON.parse(localStorage.getItem('newProp'));
+
+          // if(newProperty.SellRent == this.SellRent){
+          //   this.Properties = [newProperty, ...this.Properties];
+          // }
           //console.log(data);
         },
         (error) => {
