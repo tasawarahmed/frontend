@@ -100,7 +100,27 @@
 
         </tab>
         <tab heading="Photos">
-          <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+          <section class="gallery">
+            <div class="container">
+              <div class="img-container">
+                <img src="../assets/images/interior-1.jpg" alt="image1" id="preview">
+                <div class="img-prev text-center">
+                  <div class="img-slide">
+                    <img src="../assets/images/interior-1.jpg" alt="image1" appDemo>
+                  </div>
+                  <div class="img-slide">
+                    <img src="../assets/images/interior-2.jpg" alt="image2" appDemo>
+                  </div>
+                  <div class="img-slide">
+                    <img src="../assets/images/interior-3.jpg" alt="image3" appDemo>
+                  </div>
+                  <div class="img-slide">
+                    <img src="../assets/images/interior-4.jpg" alt="image4" appDemo>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </section>
         </tab>
         <tab heading="Contact">
           <h1>Contact Detail</h1>

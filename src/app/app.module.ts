@@ -25,6 +25,7 @@ import { PropertyDetailResolverService } from './property/property-detail/proper
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { DemoDirective } from './property/property-detail/demo.directive';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SortPipe } from './pipes/sort.pipe';
     UserRegisterComponent,
     FilterPipe,
     SortPipe,
+    DemoDirective,
   ],
   imports: [
     BrowserModule,
