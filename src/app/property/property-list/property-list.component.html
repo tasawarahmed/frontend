@@ -1,23 +1,38 @@
-<label for="">Filter city: </label>
-<input type="text" [(ngModel)]="City">
-<button type="button" (click)="onCityFilter()">Search</button>
-<button type="button" (click)="onCityFilterClear()">Clear</button>
-<label for="">Sort by &nbsp</label>
-<select [(ngModel)]="SortbyParam">
-  <option value="City">City</option>
-  <option value="Price">Price</option>
-</select>
-<button ype="button" (click)="onSortDirection()">
-  <i *ngIf="SortDirection === 'asc'" class="fas fa-sort-alpha-down"></i>
-  <i *ngIf="SortDirection === 'desc'" class="fas fa-sort-alpha-up"></i>
-</button>
+<table style="width: 100%;">
+  <tr>
+    <td style="width: 15%; text-align: right;">
+      <label for="">Filter by city: </label>
+    </td>
+    <td style="width: 35%;">
+      <input style="width: 200px;" type="text" [(ngModel)]="City" />
+      <button class="btn btn-primary" style="margin: 5px;" type="button" (click)="onCityFilter()">Search</button>
+      <button class="btn btn-success" type="button" (click)="onCityFilterClear()">Clear</button>
+    </td>
+    <td style="width: 20%; text-align: right;">
+      <label for="">Sort by: </label>
+    </td>
+    <td style="width: 30%;">
+      <select style="width: 200px" [(ngModel)]="SortbyParam">
+        <option value="City">City</option>
+        <option value="Price">Price</option>
+      </select>
+      <button type="button" style="margin: 5px;" (click)="onSortDirection()">
+        <i *ngIf="SortDirection === 'asc'" class="fas fa-sort-alpha-down"></i>
+        <i *ngIf="SortDirection === 'desc'" class="fas fa-sort-alpha-up"></i>
+      </button>
+    </td>
+  </tr>
+</table>
 
 <div class="row">
-  <div *ngFor="let Property of Properties|filter:SearchCity:'City'|sort:[SortbyParam, SortDirection]" class="shadow-lg col-sm-4 p-3">
-
-<app-property-card [property]="Property">
-
-</app-property-card>
-
-</div>
+  <div
+    *ngFor="
+      let Property of Properties
+        | filter: SearchCity:'City'
+        | sort: [SortbyParam, SortDirection]
+    "
+    class="shadow-lg col-sm-4 p-3"
+  >
+    <app-property-card [property]="Property"> </app-property-card>
+  </div>
 </div>
