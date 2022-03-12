@@ -24,7 +24,7 @@ export class UserLoginComponent implements OnInit {
       localStorage.setItem('token', token.userName);
       this.alertify.success('Login successful');
       loginForm.reset;
-      this.router.navigate(['/']);
+      (<any>this.router).navigate(['/']);
     }else {
       this.alertify.error('Login not successful');
     }

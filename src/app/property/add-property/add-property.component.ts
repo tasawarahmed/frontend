@@ -93,7 +93,9 @@ export class AddPropertyComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    (<any>this.router).navigate(['/']);
+
   }
 
   //Getter Methods
@@ -210,9 +212,9 @@ export class AddPropertyComponent implements OnInit {
       this.nextClicked = false;
 
       if (this.SellRent.value === '2') {
-        this.router.navigate(['/rent-property']);
+        (<any>this.router).navigate(['/rent-property']);
       } else {
-        this.router.navigate(['/']);
+        (<any>this.router).navigate(['/']);
       }
     } else {
       this.alertify.error(

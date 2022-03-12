@@ -12,11 +12,31 @@ export class PropertyListComponent implements OnInit {
   SellRent: number = 1;
   PropertyType: string = '';
   Properties: Array<IPropertyBase> = [];
+  City: string = '';
+  SearchCity: string = '';
+  SortbyParam: string = '';
+  SortDirection: string = 'asc';
 
   constructor(
     private route: ActivatedRoute,
     private housingService: HousingService
   ) {}
+
+  onCityFilter(){
+    this.SearchCity = this.City;
+  }
+
+  onSortDirection(){
+    if(this.SortDirection === 'desc'){
+      this.SortDirection = 'asc';
+    }else {
+      this.SortDirection = 'desc';
+    }
+  }
+
+  onCityFilterClear(){
+    this.SearchCity = this.City = '';
+  }
 
   ngOnInit(): void {
     this.PropertyType = this.route.snapshot.url.toString();
