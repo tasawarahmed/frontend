@@ -1,19 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserForLogin, UserForRegister } from '../model/user';
+import { BaseurlService } from './baseurl.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  //baseUrl = 'http://localhost:1061/api';
+  constructor(private http: HttpClient, private baseUrl: BaseurlService) {}
 
-  authUser(user: any) {
-    let UserArray = [];
-    if (localStorage.getItem('Users')) {
-      UserArray = JSON.parse(localStorage.getItem('Users'));
-    }
+  authUser(user: UserForLogin) {
+    return this.http.post(this.baseUrl.getBaseUrl() + '/account/login', user);
+  }
 
-    return UserArray.find(
-      (p) => p.userName === user.userName && p.password === user.password
+  registerUser(user: UserForRegister) {
+    return this.http.post(
+      this.baseUrl.getBaseUrl() + '/account/register',
+      user
     );
   }
 }

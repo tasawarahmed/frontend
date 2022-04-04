@@ -1,0 +1,2 @@
+
+Interceptors are used to intercept all Http requests and to implement global error handling in angular app
