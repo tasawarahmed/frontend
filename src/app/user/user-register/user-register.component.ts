@@ -5,9 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { User } from 'src/app/model/user';
+import { UserForRegister } from 'src/app/model/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-register',
@@ -16,12 +16,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserRegisterComponent implements OnInit {
   registrationForm: FormGroup;
-  user: User;
+  user: UserForRegister;
   userSubmitted: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private alertify: AlertifyService
   ) {}
 
@@ -80,16 +80,18 @@ export class UserRegisterComponent implements OnInit {
     if (this.registrationForm.valid) {
       //this was wrong approach to do the task
       //this.user = Object.assign(this.user, this.registrationForm.value);
-      this.userService.addUser(this.userData());
-      this.registrationForm.reset;
-      this.userSubmitted = false;
-      this.alertify.success('Congrats, you are successfully registered');
-    } else {
-      this.alertify.error('Kindly provide the required fields');
+      this.authService.registerUser(this.userData()).subscribe(
+        () => {
+          this.registrationForm.reset;
+          this.userSubmitted = false;
+          this.alertify.success('Congrats, you are successfully registered');
+            }
+      );
+      // this.authService.addUser(this.userData());
     }
   }
 
-  userData(): User {
+  userData(): UserForRegister {
     return (this.user = {
       userName: this.userName.value,
       email: this.email.value,

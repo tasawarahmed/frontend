@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { DemoDirective } from './property/property-detail/demo.directive';
+import { BaseurlService } from './services/baseurl.service';
+import { HttperrorInterceptor } from './services/httperror.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,11 +57,17 @@ import { DemoDirective } from './property/property-detail/demo.directive';
     FormsModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttperrorInterceptor,
+      multi: true
+    },
     HousingService,
     UserService,
     AuthService,
     AlertifyService,
-    PropertyDetailResolverService
+    PropertyDetailResolverService,
+    BaseurlService
   ],
   bootstrap: [AppComponent]
 })
