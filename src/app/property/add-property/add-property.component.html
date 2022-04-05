@@ -42,7 +42,7 @@
                     class="btn-group"
                     btnRadioGroup
                     formControlName="BHK"
-                    [(ngModel)]="propertyView.BHK"
+                    [(ngModel)]="propertyView.bhk"
                   >
                     <label
                       *ngFor="let bhk of [1, 2, 3, 4]"
@@ -61,7 +61,7 @@
                     class="btn-group"
                     btnRadioGroup
                     formControlName="PType"
-                    [(ngModel)]="propertyView.PType"
+                    [(ngModel)]="propertyView.propertyType"
                   >
                     <label
                       *ngFor="let ptype of propertyTypes"
@@ -79,7 +79,7 @@
                     class="btn-group"
                     btnRadioGroup
                     formControlName="FType"
-                    [(ngModel)]="propertyView.FType"
+                    [(ngModel)]="propertyView.furnishingType"
                   >
                     <label
                       *ngFor="let ptype of furnishTypes"
@@ -100,7 +100,7 @@
                     formControlName="Name"
                     required
                     minlength="5"
-                    [(ngModel)]="propertyView.Name"
+                    [(ngModel)]="propertyView.name"
                   />
                   <!-- <span
                     *ngIf="!propName.valid && propName.touched"
@@ -141,7 +141,7 @@
                     type="text"
                     formControlName="Price"
                     class="form-control"
-                    [(ngModel)]="propertyView.Price"
+                    [(ngModel)]="propertyView.price"
                   />
                   <div
                     class="error-block"
@@ -176,7 +176,7 @@
                     type="text"
                     class="form-control"
                     formControlName="BuiltArea"
-                    [(ngModel)]="propertyView.BuiltArea"
+                    [(ngModel)]="propertyView.builtArea"
                   />
                 </div>
                 <div class="form-group col-12">

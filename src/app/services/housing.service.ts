@@ -3,52 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Property } from '../model/property';
+import { BaseurlService } from './baseurl.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HousingService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private baseurl: BaseurlService) {}
   getAllCities(): Observable<string[]> {
     return this.http.get<string[]>('http://localhost:1061/api/city');
   }
 
   getAllProperties(SellRent?: number): Observable<Property[]> {
-    return this.http.get('data/properties.json').pipe(
-      map((data) => {
-        const propertiesArray: Array<Property> = [];
-        const localProperties = JSON.parse(localStorage.getItem('newProp'));
-
-        if (localProperties) {
-          for (const id in localProperties) {
-            if (SellRent) {
-              if (
-                data.hasOwnProperty(id) &&
-                localProperties[id].SellRent === SellRent
-              ) {
-                propertiesArray.push(localProperties[id]);
-              }
-            } else{
-              propertiesArray.push(localProperties[id]);
-            }
-
-          }
-        }
-
-        for (const id in data) {
-          if(SellRent){
-            if (data.hasOwnProperty(id) && data[id].SellRent === SellRent) {
-              propertiesArray.push(data[id]);
-            }
-            }else{
-              propertiesArray.push(data[id]);
-            }
-
-        }
-        return propertiesArray;
-      })
-    );
+    return this.http.get<Property[]>(this.baseurl.getBaseUrl() + '/property/list/' + SellRent.toString());
   }
+
   getUnfilteredProperties(): Observable<Property[]> {
     return this.http.get('data/properties.json').pipe(
       map((data) => {
@@ -74,11 +43,11 @@ export class HousingService {
   }
 
   getProperty(id: number) {
-    return this.getAllProperties().pipe(
+    return this.getAllProperties(1).pipe(
       map(propertiesArray => {
         // throw new Error('some error');
         // console.log(Error);
-        return propertiesArray.find(p => p.Id === id)
+        return propertiesArray.find(p => p.id === id)
       })
     );
   }

@@ -11,6 +11,4 @@ export class BaseurlService {
   public getBaseUrl(): string {
     return this.baseUrl;
   }
-
-
 }

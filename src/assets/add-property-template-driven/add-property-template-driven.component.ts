@@ -19,16 +19,16 @@ export class AddPropertyTemplateDrivenComponent implements OnInit {
   mainEntrance: Array<string> = ['East', 'West', 'South', 'North'];
 
   propertyView: IPropertyBase = {
-    Id: null,
-    Name: null,
-    Price: null,
-    SellRent: null,
-    PType: null,
-    FType: null,
-    BHK: null,
-    BuiltArea: null,
-    City: null,
-    RTM: null
+    id: null,
+    name: null,
+    price: null,
+    sellRent: null,
+    propertyType: null,
+    furnishingType: null,
+    bhk: null,
+    builtArea: null,
+    city: null,
+    readyToMove: null
   };
 
   constructor(private router: Router) { }
