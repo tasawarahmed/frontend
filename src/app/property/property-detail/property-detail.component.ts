@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryImage, NgxGalleryOptions, NgxGalleryAnimation } from '@kolkov/ngx-gallery';
+import { isDate } from 'ngx-bootstrap/chronos';
 import { Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 
@@ -14,6 +15,7 @@ export class PropertyDetailComponent implements OnInit {
   property = new Property();
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+  public sellRentType: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,15 @@ export class PropertyDetailComponent implements OnInit {
         this.property = data['prp'];
       }
     );
+
+    this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn);
+    this.sellRentType = this.housingService.getPropertySellRentString(this.property.sellRent);
+
+    // if(isDate(this.property.estPossessionOn)){
+    //   this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn);
+    // }else{
+    //   this.property.age = this.housingService.getPropertyAgeString(+this.property.age);
+    // }
 
     // this.route.params.subscribe((params) => {
     //   this.propertyId = +params['id'];

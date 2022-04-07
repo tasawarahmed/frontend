@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Property } from '../model/property';
 import { BaseurlService } from './baseurl.service';
+import { Ikeyvaluepair } from '../model/Ikeyvaluepair';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,14 @@ import { BaseurlService } from './baseurl.service';
 export class HousingService {
   constructor(private http: HttpClient, private baseurl: BaseurlService) {}
   getAllCities(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:1061/api/city');
+    return this.http.get<string[]>(this.baseurl.getBaseUrl() +  '/city');
+  }
+
+  getPropertyTypes(): Observable<Ikeyvaluepair[]> {
+    return this.http.get<Ikeyvaluepair[]>(this.baseurl.getBaseUrl() +  '/propertytype/list');
+  }
+  getFurnishingTypes(): Observable<Ikeyvaluepair[]> {
+    return this.http.get<Ikeyvaluepair[]>(this.baseurl.getBaseUrl() +  '/furnishingtype/list');
   }
 
   getAllProperties(SellRent?: number): Observable<Property[]> {
@@ -32,24 +40,12 @@ export class HousingService {
     );
   }
 
-  addProperty(property: Property) {
-    let newProp: Array<Property> = [property];
-
-    if (localStorage.getItem('newProp')) {
-      newProp = [property, ...JSON.parse(localStorage.getItem('newProp'))];
-    }
-
-    localStorage.setItem('newProp', JSON.stringify(newProp));
+  addProperty(property: Property): Observable<any> {
+    return this.http.post(this.baseurl.getBaseUrl() + '/property/add', property);
   }
 
   getProperty(id: number) {
-    return this.getAllProperties(1).pipe(
-      map(propertiesArray => {
-        // throw new Error('some error');
-        // console.log(Error);
-        return propertiesArray.find(p => p.id === id)
-      })
-    );
+    return this.http.get<Property>(this.baseurl.getBaseUrl() + '/property/detail/' + id.toString())
   }
 
   newPropID(): number {
@@ -59,6 +55,45 @@ export class HousingService {
     } else {
       localStorage.setItem('PID', '101');
       return +localStorage.getItem('PID');
+    }
+  }
+
+  getPropertyAge(dateOfEstablishment: string): string {
+    const today = new Date();
+    const estDate = new Date(dateOfEstablishment);
+    let age = today.getFullYear() - estDate.getFullYear();
+    const m = today.getMonth() - estDate.getMonth();
+
+    if (m < 0 || m ===0 && today.getDate() < estDate.getDate()){
+      age--;
+    }
+
+    if (today < estDate){
+      return this.getPropertyAgeString(0);
+    }
+
+    if (age === 0){
+      return 'Less than a year';
+    }
+
+    return this.getPropertyAgeString(age);
+  }
+
+  getPropertyAgeString(age: number): string {
+
+    if (age <= 0){
+      return 'Less than a year';
+    } else {
+      return age.toString() + ' years';
+    }
+  }
+
+  getPropertySellRentString(sellRent: number): string{
+    if (sellRent === 1) {
+      return 'Buy';
+    }
+    else{
+      return 'Rent';
     }
   }
 }

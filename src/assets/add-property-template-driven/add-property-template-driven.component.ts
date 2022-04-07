@@ -37,7 +37,7 @@ export class AddPropertyTemplateDrivenComponent implements OnInit {
   }
 
   onBack(){
-    this.router.navigate(['/']);
+    (<any>this.router).navigate(['/']);
   }
 
   onSubmit(Form: NgForm){
