@@ -1,7 +1,7 @@
 export interface IPropertyBase {
   id: number;
   sellRent: number;
-  image?: string;
+  photo?: string;
   name: string;
   propertyType: string;
   furnishingType: string;

@@ -2,8 +2,8 @@
   <div class="col-sm-4 p-0">
     <div class="card">
       <div class="card-img-wrapper">
-        <img *ngIf="property.image" class="card-img-top" src="assets/images/{{property.image}}" />
-        <img *ngIf="!property.image" class="card-img-top" src="assets/images/Default.png" />
+        <img *ngIf="mainPhotoUrl" class="card-img-top" src="{{mainPhotoUrl}}" />
+        <img *ngIf="!mainPhotoUrl" class="card-img-top" src="assets/images/Default.png" />
       </div>
       <div class="card-body">
         <h1 class="card-title">{{ property.name }}</h1>
@@ -105,19 +105,19 @@
           <section class="gallery">
             <div class="container">
               <div class="img-container">
-                <img src="../assets/images/interior-1.jpg" alt="image1" id="preview">
+                <img src="{{imageUrls[0]}}" alt="image1" id="preview">
                 <div class="img-prev text-center">
-                  <div class="img-slide">
-                    <img src="../assets/images/interior-1.jpg" alt="image1" appDemo>
+                  <div *ngIf="imageUrls[0]" class="img-slide">
+                    <img src="{{imageUrls[0]}}" alt="image1" appDemo>
                   </div>
-                  <div class="img-slide">
-                    <img src="../assets/images/interior-2.jpg" alt="image2" appDemo>
+                  <div *ngIf="imageUrls[1]" class="img-slide">
+                    <img src="{{imageUrls[1]}}" alt="image2" appDemo>
                   </div>
-                  <div class="img-slide">
-                    <img src="../assets/images/interior-3.jpg" alt="image3" appDemo>
+                  <div *ngIf="imageUrls[2]" class="img-slide">
+                    <img src="{{imageUrls[2]}}" alt="image3" appDemo>
                   </div>
-                  <div class="img-slide">
-                    <img src="../assets/images/interior-4.jpg" alt="image4" appDemo>
+                  <div *ngIf="imageUrls[3]" class="img-slide">
+                    <img src="{{imageUrls[3]}}" alt="image4" appDemo>
                   </div>
                 </div>
               </div>
