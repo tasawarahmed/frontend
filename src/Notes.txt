@@ -1,2 +1,36 @@
+An angular app is a single page app that is a collection of components which appear on the single page as per our routing requirements.
+Components appear on web page in a router outlet. A router outlet may be default or named. So we can direct a compnent to named router
+outlet also.
 
-Interceptors are used to intercept all Http requests and to implement global error handling in angular app
+The only html file of angular app is index.html, the main component of angular app is app.component and the main module of angular app is
+app.module.ts All modules and services are to be registered in app.module.ts file. For optimization and efficient handling of angular app
+we can add other modules in angular app as well.
+
+Routing is handled in app-routing.module.ts file. To resolve all the routes some wild card routes are also included in routing profile
+of the app.
+
+Anything outside the app folder is not accessible in angular app unless its path is defined in angular.json file. So if we want to keep
+some data file in data folder we will have to define path in angular.json under assets node.
+
+Each component displays some data that comes either from parent component or from backend API. To efficiently display data we should make
+a model for the data to be displayed on that component.
+The API response consists of data in JSON format in camelCase so in order to automatically map API data to the model we should name the
+properties of model in camelCase also.
+
+Components request data from Backend API using service. A service is usually injected in a component's constructor and this approach is called
+dependency injection. A service then issues some http request and gets data asynchronously. For efficiency, a service should also map the
+received data to some model for efficient binding. This mapping is done automatically if naming and spellings are correct.
+
+So the real power of angular comes when we have correct model interpretation at frontend and same model interpretation at backend. We send
+what we have to send according to a model and we receive what we suppose to receive according to a model and just bind the model to view and
+show data to user. In this way the errors are minimized and work is done in predictable way.
+
+Once the data is received in model in a component, it is bound to html template using some sort of binding. That binding may be
+{{string interpolation}} or [property binding] or [(two way binding)]. console.log is a good way to check what is happening at what particular time.
+
+Based on data we receive we can manipulate html dom elements using directives like *ngIf, *ngFor etc.
+
+Route resolvers are used to check the errors etc before loading the component which should not be loaded. Actually the component should not be
+loaded if there is error. Resolvers are loke service which should also be provided in app module.
+
+Interceptors are used to intercept all Http requests and to implement global error handling in angular app.
