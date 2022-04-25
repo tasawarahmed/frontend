@@ -40,7 +40,19 @@ export class HousingService {
     );
   }
 
+  //Test method to test the file upload functionality. This method can upload single or multiple files.
+  addProperty1(formData: FormData): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    };
+    return this.http.post(this.baseurl.getBaseUrl() + '/property/add1', formData, httpOptions );
+  }
+
+
   addProperty(property: Property): Observable<any> {
+    console.log(property);
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + localStorage.getItem('token')

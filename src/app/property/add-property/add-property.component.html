@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header">List Your Property</div>
       <div class="card-body">
-        <form (ngSubmit)="onSubmit()" [formGroup]="addPropertyForm">
+        <form (ngSubmit)="onSubmit1()" [formGroup]="addPropertyForm">
           <div class="tab-panel">
             <tabset class="member-tabset" #formTabs>
               <tab heading="Basic Info" formGroupName="BasicInfo">
@@ -261,12 +261,30 @@
                 <div class="form-group col-12">
                   <p>Ready to Move</p>
                   <div class="btn-group" btnRadioGroup formControlName="RTM">
-                    <label class="btn btn-outline-primary mr-2"
-                    btnRadio=true tabindex="0" role="button" name="RTM" (click)="propertyView.readyToMove = true" name="RTM">Yes</label>
-                    <label class="btn btn-outline-primary mr-2"
-                    btnRadio=false tabindex="0" role="button" name="RTM" (click)="propertyView.readyToMove = false" name="RTM">No</label>
+                    <label
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="true"
+                      tabindex="0"
+                      role="button"
+                      name="RTM"
+                      (click)="propertyView.readyToMove = true"
+                      name="RTM"
+                      >Yes</label
+                    >
+                    <label
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="false"
+                      tabindex="0"
+                      role="button"
+                      name="RTM"
+                      (click)="propertyView.readyToMove = false"
+                      name="RTM"
+                      >No</label
+                    >
                   </div>
-                  <div class="error-block" *ngIf="RTM.invalid && nextClicked">Please select ready to move</div>
+                  <div class="error-block" *ngIf="RTM.invalid && nextClicked">
+                    Please select ready to move
+                  </div>
                 </div>
 
                 <!-- <div  class="form-group col-6">
@@ -286,17 +304,31 @@
                     bsDatepicker
                   />
                 </div> -->
-                <div  class="form-group col-6">
-                  <label *ngIf="propertyView.readyToMove" for="">Establishment Date</label>
-                  <label *ngIf="!propertyView.readyToMove" for="">Estimated Possession Date</label>
+                <div class="form-group col-6">
+                  <label *ngIf="propertyView.readyToMove" for=""
+                    >Establishment Date</label
+                  >
+                  <label *ngIf="!propertyView.readyToMove" for=""
+                    >Estimated Possession Date</label
+                  >
                   <input
                     type="date"
                     formControlName="PossessionOn"
                     #txtPossessionOn
-                    (change)="propertyView.estPossessionOn = txtPossessionOn.value"
+                    (change)="
+                      propertyView.estPossessionOn = txtPossessionOn.value
+                    "
                     class="form-control"
                   />
-                  <div class="error-block" *ngIf="PossessionOn.invalid && (nextClicked || PossessionOn.touched)">Please select establshment/possession date</div>
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      PossessionOn.invalid &&
+                      (nextClicked || PossessionOn.touched)
+                    "
+                  >
+                    Please select establshment/possession date
+                  </div>
                 </div>
                 <!-- <div *ngIf="RTM.value == 1" class="form-group col-12">
                   <label for="">Age of Property</label>
@@ -309,10 +341,22 @@
                 <div class="form-group col-12">
                   <p>Gated Community</p>
                   <div class="btn-group" btnRadioGroup formControlName="Gated">
-                    <label class="btn btn-outline-primary mr-2"
-                    btnRadio=true tabindex="0" role="button" name="Gated">Yes</label>
-                    <label class="btn btn-outline-primary mr-2"
-                    btnRadio=false tabindex="0" role="button" name="Gated">No</label>
+                    <label
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="true"
+                      tabindex="0"
+                      role="button"
+                      name="Gated"
+                      >Yes</label
+                    >
+                    <label
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="false"
+                      tabindex="0"
+                      role="button"
+                      name="Gated"
+                      >No</label
+                    >
                     <!-- <label
                       *ngFor="let ptype of gatedCommunity"
                       class="btn btn-outline-primary mr-2"
@@ -366,12 +410,20 @@
                   </button>
                 </div>
               </tab>
-              <tab heading="Photos">
-                <div class="form-group col-12">
-                  <div class="photo-control">
-                    <button class="mt-5" type="button">Upload</button><br />
-                    This section is under construction...
-                  </div>
+              <tab heading="Photos" formGroupName="Photos">
+                <div class="mb-3">
+                  <label for="formFileMultiple" class="form-label"
+                    >Upload Photos: You can select multiple photos maximum four photos. First photo will be treated as primary photo </label>
+
+                  <input
+                  formControlName="FileUpload"
+                  Id="FileUpload"
+                  #txtFileUpload
+                    class="form-control"
+                    type="file"
+                    (change)="refreshFilesList(txtFileUpload)"
+                    multiple
+                  />
                 </div>
                 <div class="d-grid gap-2" style="margin-top: 10px">
                   <button

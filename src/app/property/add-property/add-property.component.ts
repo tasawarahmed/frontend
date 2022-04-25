@@ -27,8 +27,10 @@ export class AddPropertyComponent implements OnInit {
   nextClicked: boolean = false;
   property = new Property();
   cityList: any[];
+  selectedFiles: File[] = [];
   propertyTypes: Ikeyvaluepair[];
   furnishingTypes: Ikeyvaluepair[];
+  formData = new FormData();
 
   gatedCommunity: Array<string> = ['Yes', 'No'];
   mainEntrance: Array<string> = ['East', 'West', 'South', 'North'];
@@ -54,8 +56,11 @@ export class AddPropertyComponent implements OnInit {
     private alertify: AlertifyService
   ) {}
 
+  refreshFilesList(fUpload: HTMLInputElement){
+  }
+
   ngOnInit(): void {
-    if(!localStorage.getItem('token')){
+    if (!localStorage.getItem('token')) {
       this.alertify.error('You must be logged in to add a property.');
       (<any>this.router).navigate(['/user/login']);
     }
@@ -109,6 +114,10 @@ export class AddPropertyComponent implements OnInit {
         MainEntrance: [null],
         Description: [null],
       }),
+
+      Photos: this.fb.group({
+        FileUpload: [null],
+      }),
     });
   }
 
@@ -118,6 +127,9 @@ export class AddPropertyComponent implements OnInit {
   }
 
   //Getter Methods
+  get Photos() {
+    return this.addPropertyForm.controls.Photos as FormGroup;
+  }
   get BasicInfo() {
     return this.addPropertyForm.controls.BasicInfo as FormGroup;
   }
@@ -136,6 +148,9 @@ export class AddPropertyComponent implements OnInit {
   // #endregion
 
   // #region <Form Controls>
+  get PhotosList() {
+    return this.Photos.controls.FileUpload as FormControl;
+  }
   get SellRent() {
     return this.BasicInfo.controls.SellRent as FormControl;
   }
@@ -219,12 +234,33 @@ export class AddPropertyComponent implements OnInit {
   get Description() {
     return this.OtherInfo.controls.Description as FormControl;
   }
+
+  //Test method to test the file upload functionality. First it was set to upload single file.
+  //The final version of this method can upload multiple files.
+  onSubmit1(){
+    var filesList: FileList = (<HTMLInputElement>document.getElementById('FileUpload')).files;
+
+    for (let i = 0; i < filesList.length; i++) {
+      console.log(filesList.length);
+      console.log(filesList);
+      const file = filesList[i];
+      this.formData.append('file', file);
+      //this.selectedFiles.push(file);
+    }
+
+    //this.formData.append('file', this.selectedFiles[0]);
+
+    this.housingService.addProperty1(this.formData).subscribe(() => {
+
+    });
+  }
+
   onSubmit() {
     this.nextClicked = true;
 
     if (this.allTabsValid()) {
       this.mapProperty();
-      console.log(this.property);
+      //console.log(this.property);
       this.housingService.addProperty(this.property).subscribe(() => {
         this.alertify.success(
           'Congrats! your property listed successfully on our website.'
@@ -246,16 +282,16 @@ export class AddPropertyComponent implements OnInit {
 
   mapProperty(): void {
     this.property.id = this.housingService.newPropID();
-    this.property.sellRent = +this.SellRent.value;//
-    this.property.bhk = this.BHK.value;//
-    this.property.propertyTypeId = this.PType.value;//
-    this.property.name = this.Name.value;//
-    this.property.cityId = this.City.value;//
-    this.property.furnishingTypeId = this.FType.value;//
-    this.property.price = this.Price.value;//
-    this.property.builtArea = this.BuiltArea.value;//
+    this.property.sellRent = +this.SellRent.value; //
+    this.property.bhk = this.BHK.value; //
+    this.property.propertyTypeId = this.PType.value; //
+    this.property.name = this.Name.value; //
+    this.property.cityId = this.City.value; //
+    this.property.furnishingTypeId = this.FType.value; //
+    this.property.price = this.Price.value; //
+    this.property.builtArea = this.BuiltArea.value; //
     //using datepipe in this case is explained in video 61
-    this.property.estPossessionOn = this.PossessionOn.value;//
+    this.property.estPossessionOn = this.PossessionOn.value; //
 
     this.property.security = this.Security.value;
     this.property.maintenance = this.Maintenance.value;
@@ -269,6 +305,21 @@ export class AddPropertyComponent implements OnInit {
     this.property.mainEntrance = this.MainEntrance.value;
     this.property.description = this.Description.value;
     this.property.PostedOn = new Date().toString();
+
+    var filesList: FileList = (<HTMLInputElement>document.getElementById('FileUpload')).files;
+
+    for (let i = 0; i < filesList.length; i++) {
+      console.log(filesList.length);
+      console.log(filesList);
+      const file = filesList[i];
+      this.selectedFiles.push(file);
+    }
+
+    this.selectedFiles.forEach((f) => this.formData.append('files', f));
+    console.log("component: ", this.formData);
+
+    this.property.uploadFiles = this.formData;
+    // console.log(this.filesList);
   }
 
   allTabsValid(): boolean {

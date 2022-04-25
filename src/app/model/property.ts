@@ -31,5 +31,6 @@ export class Property implements IPropertyBase{
   PostedOn: string;
   PostedBy: number;
   photos?: Photo[];
+  uploadFiles?: FormData;
 
 }
