@@ -30,7 +30,7 @@ export class AddPropertyComponent implements OnInit {
   selectedFiles: File[] = [];
   propertyTypes: Ikeyvaluepair[];
   furnishingTypes: Ikeyvaluepair[];
-  formData = new FormData();
+  formData: FormData = new FormData();
 
   gatedCommunity: Array<string> = ['Yes', 'No'];
   mainEntrance: Array<string> = ['East', 'West', 'South', 'North'];
@@ -286,7 +286,8 @@ export class AddPropertyComponent implements OnInit {
   }
 
   mapForm(): void {
-    this.formData.delete('uploadFiles');
+    this.formData = new FormData();
+
     var filesList: FileList = (<HTMLInputElement>(
       document.getElementById('FileUpload')
     )).files;
@@ -321,7 +322,7 @@ export class AddPropertyComponent implements OnInit {
     this.formData.append('mainEntrance', this.MainEntrance.value);
     this.formData.append('description', this.Description.value);
     this.formData.append('PostedOn', new Date().toString());
-    //this.formData.append('file', this.selectedFiles[0]);
+    this.formData.append('file', this.selectedFiles[0]);
   }
 
   mapProperty(): void {
