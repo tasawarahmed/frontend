@@ -42,12 +42,13 @@ export class HousingService {
 
   //Test method to test the file upload functionality. This method can upload single or multiple files.
   addProperty1(formData: FormData): Observable<any> {
+    // console.log(formData);
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + localStorage.getItem('token')
       })
     };
-    return this.http.post(this.baseurl.getBaseUrl() + '/property/add1', formData, httpOptions );
+    return this.http.post(this.baseurl.getBaseUrl() + '/property/add2', formData, httpOptions );
   }
 
 

@@ -56,8 +56,7 @@ export class AddPropertyComponent implements OnInit {
     private alertify: AlertifyService
   ) {}
 
-  refreshFilesList(fUpload: HTMLInputElement){
-  }
+  refreshFilesList(fUpload: HTMLInputElement) {}
 
   ngOnInit(): void {
     if (!localStorage.getItem('token')) {
@@ -237,31 +236,12 @@ export class AddPropertyComponent implements OnInit {
 
   //Test method to test the file upload functionality. First it was set to upload single file.
   //The final version of this method can upload multiple files.
-  onSubmit1(){
-    var filesList: FileList = (<HTMLInputElement>document.getElementById('FileUpload')).files;
-
-    for (let i = 0; i < filesList.length; i++) {
-      console.log(filesList.length);
-      console.log(filesList);
-      const file = filesList[i];
-      this.formData.append('file', file);
-      //this.selectedFiles.push(file);
-    }
-
-    //this.formData.append('file', this.selectedFiles[0]);
-
-    this.housingService.addProperty1(this.formData).subscribe(() => {
-
-    });
-  }
-
-  onSubmit() {
+  onSubmit1() {
     this.nextClicked = true;
 
     if (this.allTabsValid()) {
-      this.mapProperty();
-      //console.log(this.property);
-      this.housingService.addProperty(this.property).subscribe(() => {
+      this.mapForm();
+      this.housingService.addProperty1(this.formData).subscribe(() => {
         this.alertify.success(
           'Congrats! your property listed successfully on our website.'
         );
@@ -280,8 +260,72 @@ export class AddPropertyComponent implements OnInit {
     }
   }
 
+  onSubmit() {
+    this.nextClicked = true;
+
+    if (this.allTabsValid()) {
+      this.mapProperty();
+      //console.log(this.property);
+      this.housingService.addProperty(this.property).subscribe(() => {
+        this.alertify.success(
+          'Congrats! your property listed successfully on our website.'
+        );
+        this.nextClicked = false;
+
+        if (this.SellRent.value === '2') {
+          (<any>this.router).navigate(['/rent-property']);
+        } else {
+          (<any>this.router).navigate(['/buy-property']);
+        }
+      });
+    } else {
+      this.alertify.error(
+        'Please review the form and provide all valid entries.'
+      );
+    }
+  }
+
+  mapForm(): void {
+    this.formData.delete('uploadFiles');
+    var filesList: FileList = (<HTMLInputElement>(
+      document.getElementById('FileUpload')
+    )).files;
+
+    for (let i = 0; i < filesList.length; i++) {
+      // console.log(filesList.length);
+      // console.log(filesList);
+      const file = filesList[i];
+      this.formData.append('uploadFiles', file);
+      //this.selectedFiles.push(file);
+    }
+
+    this.formData.append('sellRent', this.SellRent.value);
+    this.formData.append('bhk', this.BHK.value);
+    this.formData.append('propertyTypeId', this.PType.value);
+    this.formData.append('name', this.Name.value);
+    this.formData.append('cityId', this.City.value);
+    this.formData.append('furnishingTypeId', this.FType.value);
+    this.formData.append('price', this.Price.value);
+    this.formData.append('builtArea', this.BuiltArea.value);
+    //using datepipe in this case is explained in video 61
+    this.formData.append('estPossessionOn', this.PossessionOn.value);
+    this.formData.append('security', this.Security.value);
+    this.formData.append('maintenance', this.Maintenance.value);
+    this.formData.append('carpetArea', this.CarpetArea.value);
+    this.formData.append('floorNo', this.FloorNo.value);
+    this.formData.append('totalFloors', this.TotalFloor.value);
+    this.formData.append('address', this.Address.value);
+    this.formData.append('address2', this.LandMark.value);
+    this.formData.append('readyToMove', this.RTM.value);
+    this.formData.append('gated', this.Gated.value);
+    this.formData.append('mainEntrance', this.MainEntrance.value);
+    this.formData.append('description', this.Description.value);
+    this.formData.append('PostedOn', new Date().toString());
+    //this.formData.append('file', this.selectedFiles[0]);
+  }
+
   mapProperty(): void {
-    this.property.id = this.housingService.newPropID();
+    //this.property.id = this.housingService.newPropID();
     this.property.sellRent = +this.SellRent.value; //
     this.property.bhk = this.BHK.value; //
     this.property.propertyTypeId = this.PType.value; //
@@ -305,21 +349,6 @@ export class AddPropertyComponent implements OnInit {
     this.property.mainEntrance = this.MainEntrance.value;
     this.property.description = this.Description.value;
     this.property.PostedOn = new Date().toString();
-
-    var filesList: FileList = (<HTMLInputElement>document.getElementById('FileUpload')).files;
-
-    for (let i = 0; i < filesList.length; i++) {
-      console.log(filesList.length);
-      console.log(filesList);
-      const file = filesList[i];
-      this.selectedFiles.push(file);
-    }
-
-    this.selectedFiles.forEach((f) => this.formData.append('files', f));
-    console.log("component: ", this.formData);
-
-    this.property.uploadFiles = this.formData;
-    // console.log(this.filesList);
   }
 
   allTabsValid(): boolean {
